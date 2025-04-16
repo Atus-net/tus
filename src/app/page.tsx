@@ -1,115 +1,195 @@
-export default function HomePage() {
+'use client';
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+
+const allProducts = [
+  ...Array.from({ length: 10 }, (_, i) => ({
+    brand: "iphone",
+    name: `iPhone ${i + 12}`,
+    price: `${14 + i}.000.000 VNĐ`,
+    image: `/images/iphone${i}.jpg`,
+  })),
+  ...Array.from({ length: 10 }, (_, i) => ({
+    brand: "samsung",
+    name: `Samsung A${i + 24}`,
+    price: `${4 + i}.500.000 VNĐ`,
+    image: `/images/ss${i}.jpg`,
+  })),
+  ...Array.from({ length: 10 }, (_, i) => ({
+    brand: "oppo",
+    name: `Oppo Reno ${i + 6}`,
+    price: `${4 + i}.000.000 VNĐ`,
+    image: `/images/op${i}.jpg`,
+  })),
+];
+
+const banners = [
+  {
+    id: 1,
+    image: '/images/banner-on-iphone.jpg',
+    alt: 'Banner 1',
+  },
+  {
+    id: 2,
+    image: '/images/banner-on-samsung.jpg',
+    alt: 'Banner 2',
+  },
+  {
+    id: 3,
+    image: '/images/banner-on-op2.jpg',
+    alt: 'Banner 3',
+  },
+];
+
+export default function SmartphoneStore() {
+  const [filter, setFilter] = useState("all");
+
+  const filteredProducts =
+    filter === "all"
+      ? allProducts
+      : allProducts.filter((p) => p.brand === filter);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const container = scrollRef.current;
+        const scrollWidth = container.scrollWidth;
+        const visibleWidth = container.clientWidth;
+
+        const nextScrollLeft =
+          container.scrollLeft + visibleWidth >= scrollWidth
+            ? 0
+            : container.scrollLeft + visibleWidth;
+
+        container.scrollTo({ left: nextScrollLeft, behavior: 'smooth' });
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <main className="bg-[#E5FCF9] min-h-screen font-sans">
-      {/* Header */}
-      <header className="bg-white">
-        <div className="relative flex justify-center items-center p-4">
-          <img src="/banner1.jpg" alt="Banner" className="w-full max-w-5xl rounded-lg shadow" />
-          <h1 className="absolute text-xl font-extrabold text-[#000066] tracking-[0.5em]">S a i g o n&nbsp;&nbsp;&nbsp;U n i f o r m</h1>
+    <div className="bg-white">
+
+      {/* Line giảm giá */}
+      <div className="bg-orange-100 text-center text-red-600 font-bold py-2">
+        <div className="container px-40">
+          NHẬN NGAY MÃ GIẢM 5% TỐI ĐA 300.000Đ
         </div>
+      </div>
 
-        <nav className="flex justify-center gap-2 p-2">
-          {['Về Chúng Tôi', 'Khách Hàng', 'Sản Phẩm', 'Tin Tức', 'Chính Sách', 'Liên Hệ'].map((item, idx) => (
-            <button key={idx} className="bg-[#E8E8FF] text-sm text-[#0000CC] font-semibold px-3 py-1 rounded hover:bg-[#d0d0ff]">
-              {item}
-            </button>
-          ))}
-        </nav>
-      </header>
+      {/* Header */}
+      <div className="bg-purple-300 py-3">
+        <div className="container px-40 flex justify-between items-center">
+          <div className="flex space-x-4 text-sm font-medium">
+            <button onClick={() => setFilter("all")} className={filter === "all" ? "underline" : ""}>🏠 Trang chủ</button>
+            <button onClick={() => setFilter("iphone")} className={filter === "iphone" ? "underline" : ""}>📱 Iphone</button>
+            <button onClick={() => setFilter("samsung")} className={filter === "samsung" ? "underline" : ""}>📱 SamSung</button>
+            <button onClick={() => setFilter("oppo")} className={filter === "oppo" ? "underline" : ""}>📱 Oppo</button>
+            <a href="#">📦 Đơn hàng</a>
+            <a href="#">😊 Về chúng tôi</a>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Bạn tìm gì"
+              className="px-2 py-1 rounded border-2 border-purple-400"
+            />
+            <button className="bg-blue-500 text-white px-3 py-1 rounded">Search</button>
+          </div>
+        </div>
+      </div>
 
-      {/* Góc kinh nghiệm */}
-      <section className="text-center my-6">
-        <h2 className="inline-block bg-[#FFF4CF] text-[#9B1C1C] text-lg font-bold px-6 py-2 rounded-full tracking-widest">
-          GÓC KINH NGHIỆM
-        </h2>
-      </section>
-
-      {/* Top 5 chất liệu vải */}
-      <section className="max-w-4xl mx-auto bg-white px-6 py-4 rounded-lg shadow border border-dashed border-[#F3C623]">
-        <h3 className="text-center text-base font-bold text-[#9B1C1C] mb-4">
-          Top 5 chất liệu vải may áo sơ mi phổ biến
-        </h3>
-        <div className="flex flex-col md:flex-row gap-4 items-center">
-          <ul className="list-decimal text-sm text-gray-800 space-y-2 pl-5 flex-1 ">
-            <li>Vải Kate – Chất liệu vải áo sơ mi phổ biến hiện nay </li>
-            <li>Vải cotton – Top 5 chất liệu vải may áo sơ mi được ưa chuộng</li>
-            <li>Vải Kaki – Chất liệu vải đa năng trong may mặc</li>
-            <li>Vải lụa – Chất liệu may áo sơ mi được ưa chuộng</li>
-            <li>Vải sợi bamboo – chất liệu may áo sơ mi phổ biến</li>
-          </ul>
-          <div className="flex-1 flex justify-center">
-            <div className="w-full h-full max-w-xs bg-gray-200 rounded shadow-inner flex items-center justify-center">
-              <img
-                src="/top-5-chat-lieu-vai-may-ao-so-mi-1.jpg"
-                alt="Top 5 chất liệu vải"
-                className="h-full w-auto object-cover rounded-lg shadow"
+      {/* Banner */}
+      <div className="container px-40">
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto scroll-smooth w-full aspect-[3/1] pt-5"
+        >
+          {banners.map((item) => (
+            <div
+              key={item.id}
+              className="min-w-full relative flex-shrink-0"
+            >
+              <Image
+                src={item.image}
+                alt={item.alt}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                quality={85}
+                priority
               />
             </div>
+          ))}
+        </div>
+
+        {/* Danh sách sản phẩm */}
+        <div className="pt-5 pb-10">
+          <h2 className="text-xl font-bold mb-4 capitalize">
+            {filter === "all" ? "Tất cả sản phẩm" : `Sản phẩm ${filter}`}
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {filteredProducts.map((item, i) => (
+              <div
+                key={i}
+                className="border-2 border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm flex flex-col"
+              >
+                <div className="w-full aspect-square relative">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover p-2"
+                  />
+                </div>
+                <div className="p-2 text-center flex flex-col gap-1">
+                  <div className="font-medium">{item.name}</div>
+                  <div className="text-red-400 font-semibold">{item.price}</div>
+                  <button className="mt-2 text-green-500 px-3 py-1 rounded border-2 border-green-500">
+                    🛒 Đặt hàng
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </section>
-
-      {/* Khách hàng */}
-      <section className="text-center mt-10">
-        <h2 className="inline-block bg-[#FFF4CF] text-[#9B1C1C] text-lg font-bold px-6 py-2 rounded-full tracking-widest">
-          KHÁCH HÀNG
-        </h2>
-      </section>
-
-      {/* Danh sách khách hàng */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto p-6">
-        <div className="bg-white rounded-lg shadow p-4">
-          <img src="/OVI.png" alt="Logo khách hàng" className="mx-auto mb-2" />
-          <h4 className="text-sm font-semibold text-[#1A1A1A] mb-1">Tên công ty khách hàng</h4>
-          <p className="text-xs text-gray-600 mb-2">
-            Mô tả ngắn về khách hàng và đồng phục họ đặt may...
-          </p>
-          <button className="text-xs text-white bg-[#4A90E2] px-3 py-1 rounded hover:bg-blue-600">
-            Xem chi tiết
-          </button>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-4">
-          <img src="/zone_group.png" alt="Logo khách hàng" className="mx-auto mb-2" />
-          <h4 className="text-sm font-semibold text-[#1A1A1A] mb-1">Tên công ty khách hàng</h4>
-          <p className="text-xs text-gray-600 mb-2">
-            Mô tả ngắn về khách hàng và đồng phục họ đặt may...
-          </p>
-          <button className="text-xs text-white bg-[#4A90E2] px-3 py-1 rounded hover:bg-blue-600">
-            Xem chi tiết
-          </button>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-4">
-          <img src="/popeyes.png" alt="Logo khách hàng" className="mx-auto mb-2" />
-          <h4 className="text-sm font-semibold text-[#1A1A1A] mb-1">Tên công ty khách hàng</h4>
-          <p className="text-xs text-gray-600 mb-2">
-            Mô tả ngắn về khách hàng và đồng phục họ đặt may...
-          </p>
-          <button className="text-xs text-white bg-[#4A90E2] px-3 py-1 rounded hover:bg-blue-600">
-            Xem chi tiết
-          </button>
-        </div>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-[#4A148C] text-white text-xs mt-10">
-        <div className="max-w-6xl mx-auto px-4 py-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center md:text-left">
-          <div>
-            <p>Điện thoại: 028.7777.7899</p>
-            <p>Email: info@saigonuniform.com</p>
+      <div className="bg-purple-200">
+        <div className="container px-40 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm py-5">
+          <div className="space-y-2">
+            <h3 className="font-semibold">😊 Về Chúng Tôi</h3>
+            <p>Chính Sách Đặt Hàng</p>
+            <p>Chính Sách Bảo Mật Thông Tin</p>
+            <p>Thông Tin Đặt Hàng</p>
           </div>
-          <div>
-            <p>21/6 Lê Thị Hồng, Tân Thới, Hóc Môn, TP.HCM</p>
-            <p>Công ty cổ phần POSIDO</p>
+          <div className="space-y-2">
+            <h3 className="font-semibold">✳️ Bản Quyền Thiết Kế Thuộc:</h3>
+            <p>Nguyễn Thị Thanh Thảo - 231A310043</p>
+            <p>Mai Trần Ngọc Giau - 231A310075</p>
+            <p>Lê Ngọc Mỹ Uyên - 231A310077</p>
+            {/* <div className="flex space-x-2 mt-2">
+              <span className="text-xl">📘</span>
+              <span className="text-xl">🐦</span>
+              <span className="text-xl">📺</span>
+              <span className="text-xl">📷</span>
+            </div> */}
           </div>
-          <div className="flex justify-center md:justify-end">
-            <div className="text-right">
-              <img src="/sgu_logo1.png" alt="Logo" className="mx-auto mb-2" />
-            </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold">🏬 Địa chỉ liên hệ:</h3>
+            <p>CN1: 331, QL 1A, Phường APD, Q.12, TP. HCM</p>
+            <p>CN2: 448B, Nguyễn Tất Thành, Q. 4, Tp. HCM</p>
+            <h3 className="font-semibold">📞 Số điện thoại:</h3>
+            <p>(08) 1234 5678</p>
+            <h3 className="font-semibold">📧 Email:</h3>
+            <p>info@SpacePhone-Technology.com</p>
           </div>
         </div>
-      </footer>
-    </main >
+      </div>
+    </div>
   );
 }
