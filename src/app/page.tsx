@@ -75,14 +75,14 @@ export default function SmartphoneStore() {
 
       {/* Line giảm giá */}
       <div className="bg-orange-100 text-center text-red-600 font-bold py-2">
-        <div className="container px-40">
+        <div className="container mx-auto flex justify-center items-center px-40">
           NHẬN NGAY MÃ GIẢM 5% TỐI ĐA 300.000Đ
         </div>
       </div>
 
       {/* Header */}
       <div className="bg-purple-300 py-3">
-        <div className="container px-40 flex justify-between items-center">
+        <div className="container mx-auto px-40 flex justify-between items-center">
           <div className="flex space-x-4 text-sm font-medium">
             <button onClick={() => setFilter("all")} className={filter === "all" ? "underline" : ""}>🏠 Trang chủ</button>
             <button onClick={() => setFilter("iphone")} className={filter === "iphone" ? "underline" : ""}>📱 Iphone</button>
@@ -103,7 +103,7 @@ export default function SmartphoneStore() {
       </div>
 
       {/* Banner */}
-      <div className="container px-40">
+      <div className="container mx-auto px-40">
         <div
           ref={scrollRef}
           className="flex overflow-x-auto scroll-smooth w-full aspect-[3/1] pt-5"
@@ -160,7 +160,7 @@ export default function SmartphoneStore() {
 
       {/* Footer */}
       <div className="bg-purple-200">
-        <div className="container px-40 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm py-5">
+        <div className="container mx-auto px-40 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm py-5">
           <div className="space-y-2">
             <h3 className="font-semibold">😊 Về Chúng Tôi</h3>
             <p>Chính Sách Đặt Hàng</p>
