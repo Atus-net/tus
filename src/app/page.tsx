@@ -170,7 +170,7 @@ export default function SmartphoneStore() {
           <div className="space-y-2">
             <h3 className="font-semibold">✳️ Bản Quyền Thiết Kế Thuộc:</h3>
             <p>Nguyễn Thị Thanh Thảo - 231A310043</p>
-            <p>Mai Trần Ngọc Giau - 231A310075</p>
+            <p>Mai Trần Ngọc Giàu - 231A310075</p>
             <p>Lê Ngọc Mỹ Uyên - 231A310077</p>
             {/* <div className="flex space-x-2 mt-2">
               <span className="text-xl">📘</span>
