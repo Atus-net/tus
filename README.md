@@ -5,13 +5,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1.
+Install npm version 20.18.1
+# 2.
+Open cmd, run 'npm install'
+# 3.
+Next, run 'npm run dev'
+# 4.
+Access 'http://localhost:3000/' on the browser
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
